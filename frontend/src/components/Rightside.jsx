@@ -37,7 +37,7 @@ const Rightside = ({ otherUsers }) => {
           displayUsers.map((user) => (
             <div key={user._id} className='flex items-center justify-between my-3'>
               <div className='flex p-1 '>
-                <Avatar src={`http://localhost:8080${user.profilePhoto}`} size="40px" round={true} />
+                <Avatar src={`https://twitter-clone-backend-vx80.onrender.com${user.profilePhoto}`} size="40px" round={true} />
                 <div className='ml-2 items-center'>
                   <h1 className='font-bold'>{user.name}</h1>
                   <p className='text-sm -my-1'>{`@${user.username}`}</p>
