@@ -108,7 +108,7 @@ const Tweet = ({ tweet }) => {
     return (
         <div className='w-[100%] border-b border-gray-300'>
             <div className='flex p-4 w-auto'>
-                <Avatar className='mr-2' src={`http://localhost:8080${tweet?.userDetails[0]?.profilePhoto}`} size="40" round={true} />
+                <Avatar className='mr-2' src={`https://twitter-clone-backend-vx80.onrender.com${tweet?.userDetails[0]?.profilePhoto}`} size="40" round={true} />
                 <div className='item-center w-full'>
                     <div className='flex item-center'>
                         <h1 className='font-bold mr-2'>{`${tweet?.userDetails[0]?.name}`}</h1>
@@ -119,7 +119,7 @@ const Tweet = ({ tweet }) => {
                     </div>
                     {tweet?.image && (
                         <div className='mt-2'>
-                            <img src={`http://localhost:8080${tweet.image}`} alt="Tweet" className='max-h-90 rounded' />
+                            <img src={`https://twitter-clone-backend-vx80.onrender.com${tweet.image}`} alt="Tweet" className='max-h-90 rounded' />
                         </div>
                     )}
                     <div className='flex justify-between p-3'>
@@ -168,7 +168,7 @@ const Tweet = ({ tweet }) => {
                         {tweet?.comment?.map((comment, index) => (
                             <div key={index} className='border-b border-gray-200 p-2'>
                               <div className='flex items-center'>
-                                            <Avatar className='mr-2' src={`http://localhost:8080${comment?.user?.profilePhoto}`} size="30" round={true} />
+                                            <Avatar className='mr-2' src={`https://twitter-clone-backend-vx80.onrender.com${comment?.user?.profilePhoto}`} size="30" round={true} />
                                             <p className='font-bold'>{comment?.user?.name}</p>
                                 </div>
                                 
