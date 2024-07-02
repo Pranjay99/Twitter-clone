@@ -25,7 +25,7 @@ function Trending() {
   useEffect(() => {
     async function fetchNews() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/news?category=${selectedCategory}`);
+        const response = await axios.get(`https://twitter-clone-backend-vx80.onrender.com/api/news?category=${selectedCategory}`);
         const filteredNews = response.data.articles.filter(article => article.urlToImage);
         setNews(filteredNews);
       } catch (error) {
