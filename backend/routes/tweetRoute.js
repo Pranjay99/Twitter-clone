@@ -17,13 +17,13 @@ const upload = multer({ storage });
 
 const tweetrouter = express.Router();
 
-tweetrouter.route("/create").post(isAuthenticated, upload.single('image'), createTweet);
+tweetrouter.route("/create").post(upload.single('image'), createTweet);
 //tweetrouter.route("/delete").post(isAuthenticated ,deleteTweet);
 tweetrouter.route("/delete/:id").delete(deleteTweet);
-tweetrouter.route("/like/:id").put(isAuthenticated,likeorDislike);
+tweetrouter.route("/like/:id").put(likeorDislike);
 tweetrouter.route("/alltweets/:id").get(getAllTweet);
-tweetrouter.route("/followerstweets/:id").get(isAuthenticated,getfollowingTweet);
-tweetrouter.route("/comment/:id").post(isAuthenticated,postComment);
+tweetrouter.route("/followerstweets/:id").get(getfollowingTweet);
+tweetrouter.route("/comment/:id").post(postComment);
 
 
 
