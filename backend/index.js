@@ -22,9 +22,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin: "http://localhost:3000",
-    credentials: true
-}
+  origin: 'https://twitter-clone-frontend-wxkr.onrender.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 app.use(cors(corsOptions));
 const NEWS_API_KEY = '45f508153be0483dbfcd6987476bfc06';
