@@ -21,7 +21,7 @@ const Login = () => {
         if (isLogin) {
             // Login
             try {
-                const res = await axios.post(${USER_API_END_POINT}/login, { email, password }, {
+                const res = await axios.post(`${USER_API_END_POINT}/login`, { email, password }, {
                     headers: {
                         'Content-Type': "application/json"
                     },
@@ -43,7 +43,7 @@ const Login = () => {
         } else {
             // Signup
             try {
-                const res = await axios.post(${USER_API_END_POINT}/register, { name, username, email, password }, {
+                const res = await axios.post(`${USER_API_END_POINT}/register`, { name, username, email, password }, {
                     headers: {
                         'Content-Type': "application/json"
                     },
