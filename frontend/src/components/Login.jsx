@@ -12,48 +12,46 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);  // Loading state
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(name, username, email, password);
+        setLoading(true);  // Set loading to true when the request starts
 
-        const toastId = toast.loading("Processing...");
+        try {
+            if (isLogin) {
+                const res = await axios.post(`${USER_API_END_POINT}/login`, { email, password }, {
+                    headers: { 'Content-Type': "application/json" },
+                    withCredentials: true
+                });
 
-        const loginOrSignup = isLogin
-            ? axios.post(`${USER_API_END_POINT}/login`, { email, password }, {
-                headers: { 'Content-Type': "application/json" },
-                withCredentials: true
-            })
-            : axios.post(`${USER_API_END_POINT}/register`, { name, username, email, password }, {
-                headers: { 'Content-Type': "application/json" },
-                withCredentials: true
-            });
+                const { token } = res.data;
+                localStorage.setItem('authToken', token);
 
-        toast.promise(
-            loginOrSignup,
-            {
-                loading: 'Processing...',
-                success: (res) => {
-                    if (isLogin) {
-                        const { token } = res.data; // Assuming token is returned from backend
-                        localStorage.setItem('authToken', token);
-                        dispatch(getUser(res?.data?.user));
-                        if (res.data.success) {
-                            navigate("/");
-                            return res.data.message;
-                        }
-                    } else {
-                        if (res.data.success) {
-                            setIsLogin(true);
-                            return res.data.message;
-                        }
-                    }
-                },
-                error: 'An error occurred. Please try again.'
+                dispatch(getUser(res.data.user));
+                if (res.data.success) {
+                    navigate("/");
+                    toast.success(res.data.message);
+                }
+            } else {
+                const res = await axios.post(`${USER_API_END_POINT}/register`, { name, username, email, password }, {
+                    headers: { 'Content-Type': "application/json" },
+                    withCredentials: true
+                });
+
+                if (res.data.success) {
+                    setIsLogin(true);
+                    toast.success(res.data.message);
+                }
             }
-        ).catch(console.log); // This is necessary to avoid unhandled promise rejection warnings
+        } catch (error) {
+            console.log(error);
+            toast.error("An error occurred. Please try again.");
+        } finally {
+            setLoading(false);  // Set loading to false when the request ends
+        }
     };
 
     const loginHandler = () => {
@@ -71,22 +69,29 @@ const Login = () => {
                         <h1 className='font-bold md:text-7xl text-2xl mb-5'>Happening Now</h1>
                     </div>
                     <h1 className='font-bold text-3xl my-4'>{isLogin ? "Login" : "Sign up"}</h1>
-                    <form onSubmit={submitHandler} action="" className='flex flex-col w-[85%] md:w-[60%]'>
-                        {!isLogin && (
-                            <>
-                                <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' className='outline-blue-500 border border-gray-500 px-4 py-2 rounded-full my-1' />
-                                <input type='text' value={name} onChange={(e) => setName(e.target.value)} placeholder='Name' className='outline-blue-500 border border-gray-500 px-4 py-2 rounded-full my-1' />
-                            </>
-                        )}
-                        <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' className='outline-blue-500 border border-gray-500 px-4 py-2 rounded-full my-1' />
-                        <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' className='outline-blue-500 border border-gray-500 px-4 py-2 rounded-full my-1' />
-                        <button className='bg-blue-400 py-2 rounded-full border-none text-white font-bold cursor-pointer my-3'>{isLogin ? "Login" : "Create Account"}</button>
-                        <h1>{isLogin ? "Don't have an account? " : "Already have an account? "} <span onClick={loginHandler} className='text-blue-400 cursor-pointer'>{isLogin ? "Sign up" : "Login"}</span></h1>
-                    </form>
+                    {loading ? (
+                        <div className="flex items-center justify-center">
+                            <div className="loader"></div>  {/* Loading spinner */}
+                            <p>Loading...</p>  {/* Loading message */}
+                        </div>
+                    ) : (
+                        <form onSubmit={submitHandler} action="" className='flex flex-col w-[85%] md:w-[60%]'>
+                            {!isLogin && (
+                                <>
+                                    <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' className='outline-blue-500 border border-gray-500 px-4 py-2 rounded-full my-1' />
+                                    <input type='text' value={name} onChange={(e) => setName(e.target.value)} placeholder='Name' className='outline-blue-500 border border-gray-500 px-4 py-2 rounded-full my-1' />
+                                </>
+                            )}
+                            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' className='outline-blue-500 border border-gray-500 px-4 py-2 rounded-full my-1' />
+                            <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' className='outline-blue-500 border border-gray-500 px-4 py-2 rounded-full my-1' />
+                            <button className='bg-blue-400 py-2 rounded-full border-none text-white font-bold cursor-pointer my-3'>{isLogin ? "Login" : "Create Account"}</button>
+                            <h1>{isLogin ? "Don't have an account? " : "Already have an account? "} <span onClick={loginHandler} className='text-blue-400 cursor-pointer'>{isLogin ? "Sign up" : "Login"}</span></h1>
+                        </form>
+                    )}
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default Login;
