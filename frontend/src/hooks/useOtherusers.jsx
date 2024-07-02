@@ -15,8 +15,18 @@ const useOtherusers = (id)=>{
 
         const fatchOtherusers = async () =>{
             try {
+                const token = localStorage.getItem('authToken'); // Retrieve token from storage
+
+    if (!token) {
+      throw new Error("No token available");
+    }
+
                 const res = await axios.get(`${USER_API_END_POINT}/otheruser/${id}`,
                     {
+                        headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Content-Type': 'application/json'
+                        },       
                         withCredentials:true
                     }
                 );
