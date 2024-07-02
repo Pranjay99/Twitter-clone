@@ -1,8 +1,8 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import Leftbar from './Leftbar';
 import Feed from './Feed';
 import Rightside from './Rightside';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import useGetProfile from '../hooks/useGetProfile';
 import { useSelector } from 'react-redux';
 import useOtherusers from '../hooks/useOtherusers';
@@ -10,6 +10,8 @@ import useGetMyTweet from '../hooks/useGetMyTweet';
 
 const Home = () => {
   const { user, otherUsers } = useSelector(store => store.user);
+    const navigate = useNavigate();
+
 
   useEffect(()=>{
     if (!user) {
