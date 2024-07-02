@@ -13,7 +13,7 @@ const Bookmark = () => {
   console.log('Bookmarked Tweets:', bookmarkedTweets);
 
   return (
-    <div className='w-[50%] border-l border-r border-gray-200'>
+    <div className='md:w-[50%] w-[85%] border-l border-r border-gray-200'>
       <div className='p-4'>
         <h1 className='text-2xl font-bold'>Bookmarks</h1>
       </div>
