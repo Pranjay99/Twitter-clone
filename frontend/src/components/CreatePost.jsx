@@ -86,7 +86,7 @@ const CreatePost = () => {
             </div>
             <div className='my-4'>
                 <div className='flex item-center p-4'>
-                    <Avatar src={`http://localhost:8080${user?.profilePhoto}`} size="40px" round={true} />
+                    <Avatar src={`https://twitter-clone-backend-vx80.onrender.com${user?.profilePhoto}`} size="40px" round={true} />
                     <input
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
