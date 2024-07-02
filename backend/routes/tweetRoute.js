@@ -21,7 +21,7 @@ tweetrouter.route("/create").post(isAuthenticated, upload.single('image'), creat
 //tweetrouter.route("/delete").post(isAuthenticated ,deleteTweet);
 tweetrouter.route("/delete/:id").delete(deleteTweet);
 tweetrouter.route("/like/:id").put(isAuthenticated,likeorDislike);
-tweetrouter.route("/alltweets/:id").get(isAuthenticated,getAllTweet);
+tweetrouter.route("/alltweets/:id").get(getAllTweet);
 tweetrouter.route("/followerstweets/:id").get(isAuthenticated,getfollowingTweet);
 tweetrouter.route("/comment/:id").post(isAuthenticated,postComment);
 
