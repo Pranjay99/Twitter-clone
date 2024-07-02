@@ -84,9 +84,9 @@ const Profile = () => {
                 <p>{postCount} posts</p>
                 </div>
             </div>
-            <img className='h-[200px] w-full' src={`http://localhost:8080${profile?.coverPhoto}`} alt="" />
+            <img className='h-[200px] w-full' src={`https://twitter-clone-backend-vx80.onrender.com${profile?.coverPhoto}`} alt="" />
             <div className='absolute top-52 ml-2 border-4 border-white rounded-full'>
-                    <Avatar src={`http://localhost:8080${profile?.profilePhoto}`} size="120" round={true} />
+                    <Avatar src={`https://twitter-clone-backend-vx80.onrender.com${profile?.profilePhoto}`} size="120" round={true} />
             </div>
             <div className='text-right m-4'>
             {
