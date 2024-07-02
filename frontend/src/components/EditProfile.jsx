@@ -73,9 +73,9 @@ const EditProfile = ({ show, onClose, profile }) => {
     if (coverPhoto !='') {
       return coverPhoto;
     } else if (profile?.coverPhoto) {
-      return `http://localhost:8080${profile.coverPhoto}`;
+      return `https://twitter-clone-backend-vx80.onrender.com${profile.coverPhoto}`;
     } else {
-      return `http://localhost:8080${profile.coverPhoto}`; // replace with a URL to a default cover photo if needed
+      return `https://twitter-clone-backend-vx80.onrender.com${profile.coverPhoto}`; // replace with a URL to a default cover photo if needed
     }
   };
   return (
