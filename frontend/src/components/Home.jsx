@@ -11,6 +11,12 @@ import useGetMyTweet from '../hooks/useGetMyTweet';
 const Home = () => {
   const { user, otherUsers } = useSelector(store => store.user);
 
+  useEffect(()=>{
+    if (!user) {
+      navigate("/login");
+    }
+  },[]);
+
   useOtherusers(user?._id);
   useGetMyTweet(user?._id);
 
