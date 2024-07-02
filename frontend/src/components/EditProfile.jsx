@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from 'react-avatar';
 import { USER_API_END_POINT } from '../utils/constants';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { getUser, updateUser } from '../redux/userSlice';
 import { updateUserDetailsInTweets } from '../redux/tweetSlice';
-
 
 const EditProfile = ({ show, onClose, profile }) => {
   const [name, setName] = useState(profile?.name || '');
@@ -18,10 +17,20 @@ const EditProfile = ({ show, onClose, profile }) => {
   const [profilePhotoFile, setProfilePhotoFile] = useState(null);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (profile) {
+      setName(profile.name || '');
+      setUsername(profile.username || '');
+      setBio(profile.bio || '');
+      setLocation(profile.location || '');
+      setCoverPhoto(profile.coverPhoto || '/upload/default-profile.jpg');
+      setProfilePhoto(profile.profilePhoto || '/upload/default-profile.jpg');
+    }
+  }, [profile]);
+
   if (!show) {
     return null;
   }
-  console.log(profile);
 
   const handleSave = async () => {
     const formData = new FormData();
@@ -38,22 +47,18 @@ const EditProfile = ({ show, onClose, profile }) => {
           'Content-Type': 'multipart/form-data',
         },
         withCredentials: true,
-
       });
       console.log('Profile updated successfully:', response.data);
-      //dispatch(getUser(response.data.user));
       dispatch(updateUser(response.data.user));
       dispatch(updateUserDetailsInTweets(response.data.user));
 
-
-
       onClose();
-      window.location.reload();  // Refresh the page
-
+      window.location.reload(); // Refresh the page
     } catch (error) {
       console.error('Error updating profile:', error);
     }
   };
+
   const handleCoverPhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -69,86 +74,90 @@ const EditProfile = ({ show, onClose, profile }) => {
       setProfilePhotoFile(file);
     }
   };
+
   const getCoverPhotoSrc = () => {
-    if (coverPhoto !='') {
+    if (coverPhoto !== '') {
       return coverPhoto;
     } else if (profile?.coverPhoto) {
       return `https://twitter-clone-backend-vx80.onrender.com${profile.coverPhoto}`;
     } else {
-      return `https://twitter-clone-backend-vx80.onrender.com${profile.coverPhoto}`; // replace with a URL to a default cover photo if needed
+      return '/upload/default-profile.jpg'; // URL to a default cover photo if needed
     }
   };
+
   return (
     <div style={styles.overlay}>
       <div style={styles.popup}>
-        <div className='flex justify-between items-center'>
+        <div className="flex justify-between items-center">
           <button style={styles.closeButton} onClick={onClose}>
             &times;
           </button>
-          <h1 className='text-xl font-bold'>Edit Profile</h1>
-          <button className='rounded-full bg-black text-white px-4 py-2' onClick={handleSave}>Save</button>
+          <h1 className="text-xl font-bold">Edit Profile</h1>
+          <button className="rounded-full bg-black text-white px-4 py-2" onClick={handleSave}>
+            Save
+          </button>
         </div>
-        <div className='pt-3 relative'>
+        <div className="pt-3 relative">
           <label htmlFor="cover-photo-input">
-            <img 
+            <img
               src={getCoverPhotoSrc()}
-              alt="cover photo" 
+              alt="cover photo"
               className="w-full h-48 object-cover cursor-pointer"
             />
           </label>
-          <input 
-            id="cover-photo-input" 
-            type="file" 
-            accept="image/*" 
-            style={{ display: 'none' }} 
-            onChange={handleCoverPhotoChange} 
+          <input
+            id="cover-photo-input"
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={handleCoverPhotoChange}
           />
-          <div className='absolute top-44 -mt-5 left-4 border-4 border-white rounded-full'>
+          <div className="absolute top-44 -mt-5 left-4 border-4 border-white rounded-full">
             <label htmlFor="profile-photo-input">
-              <Avatar 
-                src={profilePhoto?profilePhoto:`http://localhost:8080${profile?.profilePhoto}`} 
-                size="120" 
-                round={true} 
+              <Avatar
+                src={profilePhoto ? profilePhoto : `https://twitter-clone-backend-vx80.onrender.com${profile?.profilePhoto}`}
+                size="120"
+                round={true}
                 className="cursor-pointer"
               />
             </label>
-            <input 
-              id="profile-photo-input" 
-              type="file" 
-              accept="image/*" 
-              style={{ display: 'none' }} 
-              onChange={handleProfilePhotoChange} 
+            <input
+              id="profile-photo-input"
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleProfilePhotoChange}
             />
           </div>
         </div>
-        <div className='mt-20'>
+        <div className="mt-20">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
-            className='w-full p-2 border border-gray-300 rounded my-4'
+            className="w-full p-2 border border-gray-300 rounded my-4"
           />
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
-            className='w-full p-2 mb-2 border border-gray-300 rounded'
+            className="w-full p-2 mb-2 border border-gray-300 rounded"
           />
           <input
             type="text"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             placeholder="Bio"
-            className='w-full p-2 mb-2 border border-gray-300 rounded'
+            className="w-full p-2 mb-2 border border-gray-300 rounded"
           />
           <input
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Location"
-            className='w-full p-2 mb-2 border border-gray-300 rounded'
+            className="w-full p-2 mb-2 border border-gray-300 rounded"
           />
         </div>
       </div>
