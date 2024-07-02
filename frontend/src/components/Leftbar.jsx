@@ -1,6 +1,8 @@
 import React from 'react';
 import { CiHome } from "react-icons/ci";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoLogIn } from "react-icons/io5";
+
 import { FaSearch } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { FaRegBookmark } from "react-icons/fa";
@@ -57,6 +59,10 @@ const Leftbar = () => {
           <Link to={`/bookmark`} className='flex items-center md:my-2 hover:bg-gray-300 rounded-full hover:cursor-pointer md:py-3 md:px-4 p-1 ml-3 my-4'>
             <FaRegBookmark size="22px" />
             <span className='font-bold hidden sm:block ml-2'> Bookmark</span>
+          </Link>
+          <Link to={`/login`} className='flex items-center md:my-2 hover:bg-gray-300 rounded-full hover:cursor-pointer md:py-3 md:px-4 p-1 ml-3 my-4'>
+            <IoLogIn  size="22px" />
+            <span className='font-bold hidden sm:block ml-2'> login</span>
           </Link>
           <div onClick={logouthandler} className='flex items-center md:my-2 hover:bg-gray-300 rounded-full hover:cursor-pointer md:py-3 md:px-4 p-1 ml-3 my-4'>
             <IoLogOut size="24px" />
