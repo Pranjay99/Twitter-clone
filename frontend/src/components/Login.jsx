@@ -28,7 +28,7 @@ const Login = () => {
                     withCredentials: true
                 });
 
-                const { token } = response.data; // Assuming token is returned from backend
+                const { token } = res.data; // Assuming token is returned from backend
                 localStorage.setItem('authToken', token);
 
                 console.log(res);
