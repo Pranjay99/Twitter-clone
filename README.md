@@ -11,6 +11,11 @@ This project is a Twitter clone application built to simulate the core functiona
 - **Trending Topics:** Integration with the Twitter API to fetch and display trending topics.
 - **Responsive Design:** Fully responsive user interface designed with Tailwind CSS for a seamless experience across devices.
 - **Profile Management:** Users can update their profiles, follow/unfollow other users, and manage their timelines.
+  ![image](https://i.imgur.com/9AgrDMV.png)
+  ![image](https://i.imgur.com/ptoS2VN.png)
+
+  
+
 
 ## Technologies Used
 
